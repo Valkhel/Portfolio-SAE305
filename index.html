@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Hippolyte Foreau - BUT R&T</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- STYLES GENERAUX --- */
+        :root {
+            --primary: #0f172a;      /* Bleu nuit professionnel */
+            --secondary: #334155;    /* Gris ardoise */
+            --accent: #2563eb;       /* Bleu roi pour l'action */
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+        nav.scrolled { box-shadow: var(--shadow); }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem;
+        }
+        .logo { font-weight: 800; font-size: 1.25rem; color: var(--primary); text-decoration: none; letter-spacing: -0.5px; }
+        .nav-links { list-style: none; display: flex; gap: 2rem; }
+        .nav-links a { text-decoration: none; color: var(--secondary); font-weight: 500; transition: color 0.3s; font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- HERO HEADER --- */
+        header {
+            padding: 9rem 0 5rem;
+            background: radial-gradient(circle at top right, #edf2f7 0%, transparent 40%), white;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        .hero-content {
+            display: flex; align-items: center; gap: 4rem;
+            flex-direction: row-reverse;
+        }
+        .profile-img {
+            width: 280px; height: 280px; object-fit: cover; border-radius: 12px;
+            box-shadow: 20px 20px 0 var(--bg-light), 0 0 20px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+        .hero-text h1 { font-size: 3.5rem; margin-bottom: 1rem; color: var(--primary); line-height: 1.1; letter-spacing: -1px; }
+        .hero-text .subtitle { font-size: 1.25rem; color: var(--accent); font-weight: 600; margin-bottom: 1.5rem; display: block; }
+        .hero-text p { color: var(--text-muted); font-size: 1.1rem; max-width: 600px; margin-bottom: 2rem; }
+        
+        .projection-box {
+            background: var(--white);
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        .projection-box h3 { margin-bottom: 0.5rem; color: var(--primary); font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+        .projection-box h3 i { color: var(--accent); }
+
+        /* Badges techniques (Veille/Certifs) */
+        .tech-badges { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+        .tech-badge { font-size: 0.8rem; background: #e0f2fe; color: #0369a1; padding: 0.4rem 0.8rem; border-radius: 4px; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .tech-badge i { font-size: 0.9rem; }
+
+        .btn {
+            display: inline-block; padding: 0.75rem 2rem; background: var(--primary); color: white;
+            text-decoration: none; border-radius: 6px; font-weight: 600; transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
+        }
+        .btn:hover { transform: translateY(-2px); background: var(--accent); box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3); }
+
+        /* --- BILAN COMPETENCES --- */
+        .bilan-section { padding: 5rem 0; background: var(--white); border-top: 1px solid var(--border); }
+        .section-title { text-align: center; font-size: 2.25rem; margin-bottom: 4rem; color: var(--primary); position: relative; font-weight: 700; letter-spacing: -0.5px; }
+        .section-title::after {
+            content: ''; display: block; width: 60px; height: 5px; background: var(--accent);
+            margin: 1.5rem auto 0; border-radius: 3px;
+        }
+
+        .competences-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;
+        }
+        .comp-card {
+            background: var(--bg-light); border: 1px solid var(--border); border-radius: 12px; padding: 2rem;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .comp-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: var(--accent); }
+        .comp-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .comp-tag { font-size: 0.75rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; }
+        .comp-level { background: var(--primary); color: white; padding: 0.35rem 0.85rem; border-radius: 30px; font-size: 0.75rem; font-weight: 600; }
+        .comp-card h3 { margin-bottom: 1rem; color: var(--primary); font-size: 1.25rem; }
+        .comp-card ul { list-style: none; margin-bottom: 0; }
+        
+        /* Puces de liste personnalisées (FontAwesome check) */
+        .comp-card li { margin-bottom: 0.75rem; padding-left: 1.75rem; position: relative; font-size: 0.95rem; color: var(--text-muted); }
+        .comp-card li::before { 
+            content: "\f00c"; /* Code unicode pour 'check' */
+            font-family: "Font Awesome 6 Free"; 
+            font-weight: 900;
+            color: var(--accent); 
+            position: absolute; 
+            left: 0; 
+            font-size: 0.9rem;
+        }
+
+        /* --- PROJETS / SAÉ --- */
+        .sae-section { padding: 5rem 0; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; }
+        
+        .project-card {
+            background: var(--white); border-radius: 12px; overflow: hidden;
+            box-shadow: var(--shadow); border: 1px solid var(--border);
+            cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column;
+        }
+        .project-card:hover { transform: translateY(-8px); box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15); }
+        .project-img-wrapper { height: 220px; overflow: hidden; position: relative; }
+        .project-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
+        .project-card:hover .project-img { transform: scale(1.05); }
+        .project-content { padding: 1.75rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .sae-code { font-size: 0.8rem; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem; display: block; letter-spacing: 1px; }
+        .project-title { font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--primary); line-height: 1.3; }
+        .project-desc { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 1rem; flex-grow: 1; line-height: 1.6; }
+        
+        /* Stack technique dans la carte */
+        .card-stack { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .stack-item { font-size: 0.75rem; background: #f1f5f9; padding: 4px 8px; border-radius: 4px; color: var(--secondary); border: 1px solid var(--border); font-weight: 500; }
+
+        .project-footer { margin-top: auto; padding-top: 1.25rem; border-top: 1px solid var(--border); color: var(--accent); font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+        .project-footer i { transition: transform 0.3s; }
+        .project-card:hover .project-footer i { transform: translateX(5px); }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85); z-index: 2000; padding: 2rem;
+            backdrop-filter: blur(8px); overflow-y: auto;
+        }
+        .modal-content {
+            background: var(--white); width: 100%; max-width: 900px; margin: 3rem auto;
+            border-radius: 12px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .modal-header { position: relative; height: 350px; }
+        .modal-img { width: 100%; height: 100%; object-fit: cover; }
+        .close-btn {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: rgba(255, 255, 255, 0.95); border: none; width: 44px; height: 44px;
+            border-radius: 50%; font-size: 1.75rem; cursor: pointer; color: var(--primary);
+            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .close-btn:hover { background: var(--white); transform: scale(1.1); }
+        
+        .modal-body { padding: 3.5rem; }
+        .modal-tag { display: inline-block; background: var(--accent); color: white; padding: 0.35rem 1rem; border-radius: 30px; font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 0.5px; }
+        .modal h2 { font-size: 2.25rem; color: var(--primary); margin-bottom: 2rem; line-height: 1.2; letter-spacing: -1px; }
+        
+        .modal-section { margin-bottom: 3rem; }
+        .modal-section h3 {
+            font-size: 1.1rem; color: var(--secondary); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;
+            margin-bottom: 1.25rem; border-bottom: 2px solid var(--border); padding-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem;
+        }
+        .modal-section h3 i { color: var(--accent); font-size: 1rem; }
+
+        .modal p { color: var(--text-main); line-height: 1.7; font-size: 1rem; }
+        
+        .ac-list { background: var(--bg-light); border-radius: 8px; padding: 2rem; border: 1px solid var(--border); }
+        .ac-item { margin-bottom: 1rem; font-size: 0.95rem; color: var(--text-main); display: flex; gap: 1rem; align-items: flex-start; }
+        .ac-item:last-child { margin-bottom: 0; }
+        .ac-code { font-family: 'Inter', monospace; font-weight: 700; color: var(--accent); background: rgba(59, 130, 246, 0.1); padding: 0.2rem 0.6rem; border-radius: 6px; font-size: 0.85rem; min-width: 80px; text-align: center; }
+
+        .reflexion-box { background: #eff6ff; border-left: 5px solid var(--accent); padding: 2rem; border-radius: 0 8px 8px 0; }
+        
+        /* --- FOOTER --- */
+        footer { background: var(--primary); color: white; padding: 5rem 0; text-align: center; }
+        .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
+        .social-link { 
+            color: white; font-size: 1.2rem; opacity: 0.8; transition: all 0.3s; text-decoration: none; 
+            padding: 12px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); 
+            width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+        }
+        .social-link:hover { opacity: 1; background: var(--accent); border-color: var(--accent); transform: translateY(-3px); }
+
+        @media (max-width: 768px) {
+            .hero-content { flex-direction: column; text-align: center; }
+            .nav-links { display: none; }
+            .modal-content { margin: 0; border-radius: 0; min-height: 100vh; }
+            .modal-header { height: 250px; }
+            .modal-body { padding: 2rem; }
+            .section-title { font-size: 1.75rem; }
+            .hero-text h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">PORTFOLIO | HF</a>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#bilan">Bilan Compétences</a></li>
+                <li><a href="#projets">Réalisations</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header id="accueil">
+        <div class="container">
+            <div class="hero-content">
+                <img src="imgs/pic.jpg" alt="Hippolyte Foreau" class="profile-img">
+                <div class="hero-text">
+                    <h1>Hippolyte Foreau</h1>
+                    <span class="subtitle">Étudiant BUT Réseaux & Télécommunications</span>
+                    <p>
+                        Futur administrateur systèmes et réseaux passionné par la cybersécurité. 
+                        Voici mon portfolio documentant mon parcours, mes compétences et mes projets techniques 
+                        réalisés durant ma formation.
+                    </p>
+                    
+                    <div class="projection-box">
+                        <h3><i class="fas fa-crosshairs"></i> Projection Professionnelle</h3>
+                        <p>
+                            Mon ambition est de devenir <strong>Administrateur Systèmes et Réseaux</strong> spécialisé en <strong>Cybersécurité</strong>. 
+                            Je m'oriente vers l'architecture d'infrastructures sécurisées, la gestion des identités (AD/PKI) et l'audit de vulnérabilités (Red Team).
+                        </p>
+                        <div class="tech-badges">
+                            <span class="tech-badge"><i class="fas fa-book-reader"></i> Veille : CERT-FR / ANSSI</span>
+                            <span class="tech-badge"><i class="fas fa-certificate"></i> MOOC ANSSI Validé</span>
+                            <span class="tech-badge"><i class="fas fa-laptop-code"></i> En cours : TryHackMe</span>
+                        </div>
+                    </div>
+
+                    <a href="#projets" class="btn">Découvrir mes projets</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="bilan" class="bilan-section">
+        <div class="container">
+            <h2 class="section-title">Bilan des Compétences (Fin Semestre 3)</h2>
+            <div class="competences-grid">
+                
+                <article class="comp-card">
+                    <div class="comp-header">
+                        <span class="comp-tag">RT1 - Administrer</span>
+                        <span class="comp-level">Niveau 2 - Confirmé</span>
+                    </div>
+                    <h3>Administrer les réseaux et l’Internet</h3>
+                    <p class="project-desc">Administration avancée et Services.</p>
+                    <ul>
+                        <li><strong>Acquis S3 :</strong> Déploiement automatisé Active Directory (Windows Server 2019), Services réseaux avancés (DNS, DHCP, GPO), Virtualisation.</li>
+                        <li><strong>Preuve :</strong> SAÉ 3.01/3.02 (Lot Système Krypcom).</li>
+                    </ul>
+                </article>
+
+                <article class="comp-card">
+                    <div class="comp-header">
+                        <span class="comp-tag">RT2 - Connecter</span>
+                        <span class="comp-level">Niveau 2 - Confirmé</span>
+                    </div>
+                    <h3>Connecter les entreprises et les usagers</h3>
+                    <p class="project-desc">Infrastructures Opérateurs et Transmission.</p>
+                    <ul>
+                        <li><strong>Acquis S3 :</strong> Architecture MPLS/VPN (L3VPN), Protocoles de routage dynamique (OSPF, BGP), Téléphonie sur IP (SIP/RTP).</li>
+                        <li><strong>Preuve :</strong> SAÉ 3.01/3.02 (Lot Infra Krypcom) et Projet ToIP.</li>
+                    </ul>
+                </article>
+
+                <article class="comp-card">
+                    <div class="comp-header">
+                        <span class="comp-tag">RT3 - Programmer</span>
+                        <span class="comp-level">Niveau 2 - Confirmé</span>
+                    </div>
+                    <h3>Créer des outils et applications R&T</h3>
+                    <p class="project-desc">Automatisation et Scripting.</p>
+                    <ul>
+                        <li><strong>Acquis S3 :</strong> Scripting d'automatisation système (PowerShell/Bash), Interaction API.</li>
+                        <li><strong>Preuve :</strong> Scripts de déploiement AD et Projet Météo.</li>
+                    </ul>
+                </article>
+
+                <article class="comp-card" style="border-color: var(--accent); background: #f0f9ff;">
+                    <div class="comp-header">
+                        <span class="comp-tag" style="color:var(--accent);">Cyber - Sécuriser</span>
+                        <span class="comp-level" style="background:var(--accent);">Niveau 2 - Intermédiaire</span>
+                    </div>
+                    <h3>Administrer un SI sécurisé</h3>
+                    <p class="project-desc">Audit et Défense.</p>
+                    <ul>
+                        <li><strong>Acquis S3 :</strong> Audit de vulnérabilités (Pentesting), Hardening Système, Cryptographie appliquée.</li>
+                        <li><strong>Preuve :</strong> SAÉ 3.Cyber.03 (Rapport d'audit).</li>
+                    </ul>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="projets" class="sae-section">
+        <div class="container">
+            <h2 class="section-title">Mes Réalisations</h2>
+            <div class="projects-grid" id="projects-grid">
+                </div>
+        </div>
+    </section>
+
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="modal-image" src="" alt="" class="modal-img">
+                <button class="close-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <span id="modal-code" class="modal-tag"></span>
+                <h2 id="modal-title"></h2>
+                
+                <div id="modal-link-area" style="margin-bottom: 2rem;"></div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-info-circle"></i> Contexte & Description</h3>
+                    <p id="modal-desc"></p>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Compétences & Apprentissages (AC)</h3>
+                    <div id="modal-ac" class="ac-list"></div>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-brain"></i> Analyse Réflexive</h3>
+                    <div class="reflexion-box">
+                        <p id="modal-reflexion" style="white-space: pre-line; margin-bottom: 1rem;"></p>
+                        <p><strong><i class="fas fa-exclamation-circle"></i> Difficulté surmontée :</strong> <span id="modal-difficulty"></span></p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3><i class="fas fa-folder-open"></i> Traces & Preuves</h3>
+                    <p id="modal-traces" style="font-family: monospace; background: #eee; padding: 1rem; border-radius: 6px; color: var(--secondary); border: 1px solid var(--border);"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        <div class="container">
+            <h3>Me contacter</h3>
+            <p>Ouvert aux opportunités de stage et d'alternance en administration réseau & cybersécurité.</p>
+            <div class="social-links">
+                <a href="mailto:hippolyteforeaulemaire@gmail.com" class="social-link" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/Valkhel" class="social-link" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="files/cv.pdf" class="social-link" title="CV" target="_blank"><i class="fas fa-file-pdf"></i></a>
+            </div>
+            <p style="margin-top: 3rem; font-size: 0.85rem; opacity: 0.6;">&copy; 2026 Hippolyte Foreau - Portfolio BUT R&T</p>
+        </div>
+    </footer>
+
+    <script>
+        const projects = [
+            // PROJET 1 : ARCHI OPERATEUR (SAE 3.01 / 3.02)
+            {
+                id: 12,
+                code: "SAÉ 3.01 / 3.02",
+                title: "Architecture Réseau & Système (Krypcom)",
+                image: "imgs/sae301302.png", 
+                shortDesc: "Conception complète d'un opérateur (Infra MPLS + Système AD).",
+                stack: ["Cisco", "MPLS", "Windows Server 2019", "Active Directory"], 
+                fullDesc: "Projet d'architecture global pour l'opérateur fictif Krypcom. Partie Réseau : Mise en place d'un backbone MPLS/OSPF et déploiement de services L3VPN (VRF, MP-BGP) pour isoler les clients. Partie Système : Installation et configuration de l'Active Directory (Windows Server 2019) avec gestion des GPO, DNS et DHCP pour l'infrastructure interne.",
+                link: "", 
+                file: "", 
+                ac: [
+                    {code: "AC22.03", text: "Mettre en place une connexion multi-site via un réseau opérateur (MPLS)"},
+                    {code: "AC21.03", text: "Déployer des services réseaux avancés (Active Directory)"},
+                    {code: "AC22.02", text: "Mettre en place un accès distant sécurisé (VPN)"}
+                ],
+                difficulty: "La double complexité : gérer le routage avancé (MP-BGP/VRF) tout en assurant l'intégration correcte des services Windows dans cette architecture cloisonnée.",
+                traces: "Maquette GNS3, Fichiers de configuration Routeurs/Switchs, Documentation d'installation AD.",
+                reflexion: "Ce projet marque une étape importante : je ne configure plus seulement des équipements isolés, je conçois une architecture globale. J'ai compris l'interaction critique entre la couche Transport (MPLS) et la couche Service (AD), et l'importance de l'isolation (VRF) pour la sécurité d'un opérateur."
+            },
+            
+            // PROJET 2 : AUDIT CYBER (SAE 3.Cyber.03)
+            {
+                id: 13,
+                code: "SAÉ 3.03 Cyber",
+                title: "Audit de Sécurité Infrastructure",
+                image: "imgs/sae303.png", 
+                shortDesc: "Audit offensif (Red Team) et rapport de vulnérabilités.",
+                stack: ["Kali Linux", "Nmap", "Wireshark", "Pentesting"], 
+                fullDesc: "Réalisation d'un audit de sécurité croisé sur l'infrastructure d'un autre groupe. Phase de reconnaissance (Nmap), identification des vulnérabilités critiques (Cisco Smart Install, Mots de passe faibles, SMB signing) et exploitation. Rédaction d'un rapport d'audit complet proposant des mesures de remédiation (Hardening, Tiering Model AD).",
+                link: "",
+                file: "files/audit.pdf", 
+                ac: [
+                    {code: "AC25.02", text: "Prendre en main des outils de test de pénétration (Nmap, Impacket)"},
+                    {code: "AC24.01", text: "Connaître et utiliser les bonnes pratiques de cybersécurité"},
+                    {code: "AC24.05", text: "Connaître les différents types d’attaque (Kerberoasting, MITM)"}
+                ],
+                difficulty: "Identifier des vecteurs d'attaque réalistes et rédiger un rapport professionnel compréhensible pour un décideur.",
+                traces: "Rapport d'audit PDF (disponible en téléchargement), Captures d'exploitation.",
+                reflexion: "L'audit m'a fait passer de l'autre côté du miroir. Comprendre la méthodologie d'attaque (Reconnaissance > Exploitation) est indispensable pour construire des architectures défensives solides (Hardening)."
+            },
+
+            // PROJET 3 : TELEPHONIE (Projet Tech)
+            {
+                id: 11,
+                code: "Projet Technique",
+                title: "Téléphonie sur IP (ToIP)",
+                image: "imgs/telephonieip.jpg", 
+                shortDesc: "Déploiement VoIP (Asterisk) et analyse de flux.",
+                stack: ["Asterisk", "SIP", "Wireshark", "Linux"], 
+                fullDesc: "Installation et administration d'un serveur IPBX (Asterisk/XiVO). Configuration des utilisateurs, du plan de numérotation (Dialplan) et des fonctionnalités (Renvoi, Messagerie). Interconnexion de deux sites distants via un Trunk SIP et analyse des protocoles de signalisation (SIP) et de transport de voix (RTP).",
+                link: "",
+                ac: [
+                    {code: "AC22.04", text: "Administrer les réseaux d’accès des opérateurs (VoIP)"},
+                    {code: "AC21.02", text: "Configurer une politique simple de QoS (Priorisation Voix)"},
+                    {code: "AC12.04", text: "Connecter les systèmes de ToIP"}
+                ],
+                difficulty: "Le diagnostic des problèmes de signalisation SIP (Codecs, NAT) et l'analyse fine des traces Wireshark pour comprendre les échecs d'appels.",
+                traces: "Captures Wireshark (Flux RTP + SIP Flow), Fichiers de configuration.",
+                reflexion: "La ToIP m'a appris à gérer les contraintes du temps réel. Contrairement à la data, la voix ne tolère pas la latence. J'ai développé une rigueur particulière dans l'analyse de protocoles (SIP Flow)."
+            },
+
+            // PROJET 4 : FIBRE & CO (SAE 2.04)
+            {
+                id: 9,
+                code: "SAÉ 2.04",
+                title: "Projet Intégratif Fibre&Co",
+                image: "imgs/sae24.png",
+                shortDesc: "Architecture réseau complète pour une PME. Chef de projet technique.",
+                stack: ["Cisco", "Linux", "Gestion de Projet"], 
+                fullDesc: "Conception et déploiement d'une infrastructure LAN/WAN pour 'Fibre&Company'. Intégration de VLANs, Routage OSPF, Services Linux/Windows et site web vitrine. Travail de groupe sur 3 semaines en mode projet.",
+                link: "",
+                ac: [
+                    {code: "AC11.02", text: "Comprendre l’architecture des systèmes numériques"},
+                    {code: "AC11.03", text: "Configurer le réseau local (VLAN, Routage)"},
+                    {code: "AC13.06", text: "S’intégrer dans un environnement collaboratif"}
+                ],
+                difficulty: "Interconnexion complexe entre le réseau virtuel GNS3 et les équipements physiques réels du labo.",
+                traces: "Fichiers config Cisco, Topologie GNS3, Site web vitrine.",
+                reflexion: "Ce projet a marqué ma transition vers le travail d'équipe structuré. J'ai appris à coordonner différents lots techniques (Réseau/Système/Web) pour livrer une solution cohérente."
+            },
+
+            // PROJET 5 : METEO APP (SAE 2.03)
+            {
+                id: 8,
+                code: "SAÉ 2.03",
+                title: "Application Météo (JS/API)",
+                image: "imgs/sae23.jpg",
+                shortDesc: "Développement d'une web app interactive connectée à une API météo.",
+                stack: ["JavaScript", "API REST", "HTML/CSS"], 
+                fullDesc: "Création d'une page web dynamique utilisant l'API Météo Concept. Gestion du DOM, appels asynchrones (Fetch), et intégration d'une carte interactive Leaflet.",
+                link: "https://valkhel.github.io/SAE23_InstantWeather/",
+                ac: [
+                    {code: "AC13.01", text: "Utiliser un système informatique et ses outils (API)"},
+                    {code: "AC13.04", text: "Connaître l’architecture d’un site Web"},
+                    {code: "AC13.02", text: "Lire et modifier un programme (JS)"}
+                ],
+                difficulty: "Synchronisation de la carte interactive Leaflet avec les données reçues de l'API en temps réel.",
+                traces: "Code source GitHub, Application déployée.",
+                reflexion: "J'ai solidifié ma compréhension du modèle client-serveur. Comprendre comment une application consomme une API est essentiel aujourd'hui, même pour un administrateur réseau (automatisation)."
+            },
+
+            // PROJET 6 : SPECTRES (SAE 2.02)
+            {
+                id: 7,
+                code: "SAÉ 2.02",
+                title: "Exploration des Spectres",
+                image: "imgs/sae22.jpg",
+                shortDesc: "Mesure et analyse de signaux radio (RTL-SDR, MATLAB).",
+                stack: ["Matlab", "SDR", "Radiofréquence"], 
+                fullDesc: "Analyse du spectre électromagnétique (FM, 4G, 5G) à l'aide d'une clé RTL-SDR et traitement des données sous MATLAB. Corrélation avec les données ANFR (Cartoradio).",
+                link: "",
+                ac: [
+                    {code: "AC12.01", text: "Mesurer et analyser les signaux"},
+                    {code: "AC12.02", text: "Caractériser des systèmes de transmission"}
+                ],
+                difficulty: "Limitation fréquentielle du matériel (1700 MHz) obligeant à adapter les protocoles de mesure.",
+                traces: "Scripts MATLAB, Captures spectrales, Rapport d'analyse.",
+                reflexion: "Une approche concrète de la physique des télécoms. J'ai appris à interpréter ce qui est invisible (les ondes) et à lier la théorie du signal à la réalité du terrain."
+            },
+
+            // PROJET 7 : ADMIN WINDOWS (SAE 2.01)
+            {
+                id: 6,
+                code: "SAÉ 2.01",
+                title: "Admin Windows & Hybride",
+                image: "imgs/sae21.png",
+                shortDesc: "Active Directory, Windows Server 2019 et sécurité hybride.",
+                stack: ["Windows Server", "Active Directory", "Powershell"], 
+                fullDesc: "Approfondissement de l'administration système : AD DS, GPO, et sécurisation des identités. Focus sur les menaces contre les annuaires et l'environnement hybride.",
+                link: "",
+                ac: [
+                    {code: "AC11.04", text: "Maîtriser les rôles des systèmes d’exploitation"},
+                    {code: "AC11.06", text: "Installer un poste client"}
+                ],
+                difficulty: "Gestion de l'autonomie sur des sujets complexes comme la sécurité des identités.",
+                traces: "Maquettes AD, Comptes rendus de TP.",
+                reflexion: "Ce module m'a donné les clés de l'administration d'entreprise. J'ai compris que l'identité (AD) est le nouveau périmètre critique à protéger."
+            },
+
+            // PROJET 8 : PYTHON DATA (SAE 1.05)
+            {
+                id: 5,
+                code: "SAÉ 1.05",
+                title: "Traitement de Données (Python)",
+                image: "imgs/sae15.png",
+                shortDesc: "Scripting Python pour interagir avec une API (PokéAPI).",
+                stack: ["Python", "JSON", "Scripting"], 
+                fullDesc: "Développement d'outils Python pour récupérer, traiter et afficher des données JSON depuis une API RESTful. Génération automatique de pages HTML.",
+                link: "",
+                ac: [
+                    {code: "AC13.01", text: "Utiliser un système informatique"},
+                    {code: "AC13.05", text: "Choisir les mécanismes de gestion de données"}
+                ],
+                difficulty: "Conversion et formatage des données JSON complexes vers HTML/Markdown.",
+                traces: "Scripts Python, Pages HTML générées.",
+                reflexion: "Première vraie expérience d'automatisation. J'ai appris l'importance d'un code modulaire et comment traiter la donnée brute."
+            },
+
+            // PROJET 9 : SITE WEB (SAE 1.04)
+            {
+                id: 4,
+                code: "SAÉ 1.04",
+                title: "Création Site Web",
+                image: "imgs/sae14.jpg",
+                shortDesc: "Premier site web responsive (HTML/CSS) respectant les standards.",
+                stack: ["HTML5", "CSS3", "W3C"], 
+                fullDesc: "Conception d'un site web thématique. Usage de Flexbox/Grid pour le layout et respect des normes d'accessibilité WCAG.",
+                link: "https://valkhel.github.io/sae14/",
+                ac: [
+                    {code: "AC13.04", text: "Connaître l’architecture d’un site Web"},
+                    {code: "AC13.01", text: "Utiliser un système informatique"}
+                ],
+                difficulty: "Gestion du Responsive Design (Media Queries) pour mobile.",
+                traces: "Site web en ligne, Code source.",
+                reflexion: "J'ai acquis les bases fondamentales du web. La rigueur du code (Validation W3C) est essentielle pour la pérennité d'un projet."
+            },
+
+            // PROJET 10 : OPTIQUE (SAE 1.03)
+            {
+                id: 3,
+                code: "SAÉ 1.03",
+                title: "Photométrie Fibre Optique",
+                image: "imgs/sae13.jpg",
+                shortDesc: "Mesures physiques et calibrage sur liaison optique.",
+                stack: ["Fibre Optique", "Physique", "Mesures"], 
+                fullDesc: "Caractérisation d'une liaison fibre optique : mesures de pertes, réflectométrie et calibrage des équipements à 1310nm.",
+                link: "",
+                ac: [
+                    {code: "AC12.01", text: "Mesurer et analyser les signaux"},
+                    {code: "AC12.03", text: "Déployer des supports de transmission"}
+                ],
+                difficulty: "Rigueur extrême nécessaire lors des calibrages pour éviter les biais de mesure.",
+                traces: "Tableaux de mesures, Rapport de TP.",
+                reflexion: "Ce TP m'a appris la précision technique indispensable dans les télécoms. La moindre poussière peut compromettre une liaison critique."
+            },
+
+            // PROJET 11 : RESEAU INIT (SAE 1.02)
+            {
+                id: 2,
+                code: "SAÉ 1.02",
+                title: "Initiation Réseaux",
+                image: "imgs/sae12.jpg",
+                shortDesc: "Premier réseau LAN : Adressage, VLANs et Services de base.",
+                stack: ["Réseau LAN", "VLAN", "Wireshark"], 
+                fullDesc: "Conception d'un réseau simple pour 'Fibre&Co'. Adressage IP, segmentation VLAN et services (DHCP, DNS) sur Debian.",
+                link: "",
+                ac: [
+                    {code: "AC11.03", text: "Configurer les fonctions de base du réseau local"},
+                    {code: "AC11.02", text: "Comprendre l’architecture systèmes"}
+                ],
+                difficulty: "Compréhension du trunking et du routage inter-VLAN au début.",
+                traces: "Plan d'adressage, Fichiers de conf.",
+                reflexion: "Les fondations de mon parcours. J'ai compris la logique du modèle OSI et l'importance d'un plan d'adressage rigoureux."
+            },
+
+            // PROJET 12 : HYGIENE INFO (SAE 1.01)
+            {
+                id: 1,
+                code: "SAÉ 1.01",
+                title: "Hygiène Informatique",
+                image: "imgs/sae11.jpg",
+                shortDesc: "Sensibilisation Cybersécurité (MOOC ANSSI).",
+                stack: ["ANSSI", "Sécurité", "MOOC"], 
+                fullDesc: "Auto-formation via le MOOC de l'ANSSI. Acquisition des réflexes de sécurité (Mots de passe, Phishing, Ingénierie sociale).",
+                link: "",
+                file: "files/mooc_hippolyte.pdf",
+                ac: [
+                    {code: "AC11.01", text: "Se sensibiliser à l’hygiène informatique"},
+                    {code: "AC11.05", text: "Identifier les dysfonctionnements"}
+                ],
+                difficulty: "Maintenir une rigueur constante sur les bonnes pratiques.",
+                traces: "Attestation de réussite MOOC ANSSI.",
+                reflexion: "La sécurité est l'affaire de tous. Ce module a changé ma façon d'utiliser le numérique au quotidien."
+            }
+        ];
+
+        /* --- LOGIQUE D'AFFICHAGE --- */
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            
+            projects.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.onclick = () => openModal(p);
+                
+                // Fallback image si pas d'image
+                const imgUrl = p.image ? p.image : 'https://via.placeholder.com/400x250?text=Projet+R%26T';
+
+                // Génération des tags (Stack)
+                const stackHtml = p.stack ? p.stack.map(s => `<span class="stack-item">${s}</span>`).join('') : '';
+
+                card.innerHTML = `
+                    <div class="project-img-wrapper">
+                        <img src="${imgUrl}" class="project-img" alt="${p.title}">
+                    </div>
+                    <div class="project-content">
+                        <span class="sae-code">${p.code}</span>
+                        <h3 class="project-title">${p.title}</h3>
+                        <p class="project-desc">${p.shortDesc}</p>
+                        <div class="card-stack">${stackHtml}</div>
+                        <div class="project-footer">En savoir plus <i class="fas fa-arrow-right"></i></div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(p) {
+            document.getElementById('modal-code').textContent = p.code;
+            document.getElementById('modal-title').textContent = p.title;
+            document.getElementById('modal-desc').textContent = p.fullDesc;
+            document.getElementById('modal-reflexion').textContent = p.reflexion;
+            document.getElementById('modal-difficulty').textContent = p.difficulty;
+            document.getElementById('modal-traces').textContent = p.traces;
+            
+            // Image
+            const img = document.getElementById('modal-image');
+            img.src = p.image ? p.image : 'https://via.placeholder.com/800x400';
+            img.alt = p.title;
+
+            // Gestion Liens et Fichiers
+            const linkDiv = document.getElementById('modal-link-area');
+            let linksHtml = '';
+            
+            // Lien Web
+            if (p.link && p.link.startsWith('http')) {
+                linksHtml += `<a href="${p.link}" target="_blank" class="btn" style="margin-right:1rem;"><i class="fas fa-external-link-alt"></i> Voir le site/projet</a>`;
+            }
+            
+            // Lien Fichier (PDF)
+            if (p.file) {
+                linksHtml += `<a href="${p.file}" target="_blank" class="btn" style="background:var(--secondary);"><i class="fas fa-file-download"></i> Télécharger le rapport (PDF)</a>`;
+            }
+            
+            linkDiv.innerHTML = linksHtml;
+
+            // Génération AC
+            const acDiv = document.getElementById('modal-ac');
+            acDiv.innerHTML = p.ac.map(item => `
+                <div class="ac-item">
+                    <span class="ac-code">${item.code}</span>
+                    <span>${item.text}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('project-modal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('project-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(e) {
+            const modal = document.getElementById('project-modal');
+            if (e.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Scroll Nav
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        document.addEventListener('DOMContentLoaded', renderProjects);
+    </script>
+</body>
+</html>
